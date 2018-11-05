@@ -31,5 +31,8 @@
             "composer phpunit",
             "composer style-fixer"
         ]
+    },
+    "require": {
+        "prooph/service-bus": "^6.2"
     }
 }
