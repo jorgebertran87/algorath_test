@@ -24,6 +24,21 @@ class Connections extends Collection
         $this->items[] = $item;
     }
 
+    /** @param mixed $item */
+    public function exists($item): bool
+    {
+        self::validate($item);
+
+        /** @var User $it */
+        foreach($this->items as $it) {
+            if ($it->equals($item)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private static function validate($item): void
     {
         if (! self::isAValidConnection($item)) {

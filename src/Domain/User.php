@@ -7,11 +7,17 @@ final class User
 {
     private $id;
     private $name;
+    private $connections;
 
     public function __construct(Id $id, Name $name)
     {
         $this->id = $id;
         $this->name = $name;
+    }
+
+    public function addConnections(Connections $connections): void
+    {
+        $this->connections = $connections;
     }
 
     public function id(): Id
@@ -22,6 +28,11 @@ final class User
     public function name(): Name
     {
         return $this->name;
+    }
+
+    public function connections(): Connections
+    {
+        return $this->connections;
     }
 
     public function equals(User $user): bool
