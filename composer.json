@@ -1,0 +1,35 @@
+{
+    "name": "uptodown/censor-code-test",
+    "description": "A simple exercise in PHP",
+    "autoload": {
+        "psr-4": {
+            "AlgorathTest\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    },
+    "scripts" : {
+        "syntax-check": [
+            "parallel-lint src",
+            "parallel-lint tests"
+        ],
+        "phpunit": [
+            "phpunit --configuration phpunit.xml tests"
+        ],
+        "style-fixer" : [
+            "php-cs-fixer fix --config=php_cs_config.php_cs src",
+            "php-cs-fixer fix --config=php_cs_config.php_cs tests"
+        ],
+        "ci" : [
+            "composer syntax-check",
+            "composer phpunit",
+            "composer style-fixer"
+        ]
+    }
+}
