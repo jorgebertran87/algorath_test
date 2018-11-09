@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>Users</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
@@ -25,12 +25,6 @@
                 height: 100vh;
             }
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
             .position-ref {
                 position: relative;
             }
@@ -41,12 +35,19 @@
                 top: 18px;
             }
 
+            .top-left {
+                position: absolute;
+                left: 10px;
+                top: 18px;
+            }
+
             .content {
+                margin: 50px 50px;
                 text-align: center;
             }
 
-            .title {
-                font-size: 84px;
+            .width-350 {
+                width: 350px;
             }
 
             .links > a {
@@ -59,37 +60,34 @@
                 text-transform: uppercase;
             }
 
-            .m-b-md {
-                margin-bottom: 30px;
+            .form-title {
+                float: left;
+                font-weight: bold;
+                margin-right: 20px;
+                width: 100px;
+            }
+            .form-text {
+                float: right;
+                margin-bottom: 20px;
+
+            }
+
+            .form-text input, select {
+                width: 200px;
             }
         </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
-                    @endauth
-                </div>
-            @endif
-
+        <div class="top-left links">
+            <a href="{{ url('/') }}">Users</a>
+            <a href="{{ url('/report') }}">Report</a>
+        </div>
+        <div class="top-right links">
+            <a href="{{ url('/users/new') }}">New User</a>
+        </div>
+        <div class="position-ref full-height">
             <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
+                @yield('content')
             </div>
         </div>
     </body>

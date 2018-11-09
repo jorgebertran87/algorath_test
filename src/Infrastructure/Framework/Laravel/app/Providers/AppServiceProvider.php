@@ -13,7 +13,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $this->app->bind(
+            \AlgorathTest\Application\Repository\UserRepository::class,
+            \AlgorathTest\Infrastructure\Repository\Eloquent\UserRepository::class
+        );
     }
 
     /**
