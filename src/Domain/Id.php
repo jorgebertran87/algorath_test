@@ -14,6 +14,11 @@ final class Id
         $this->id = $id;
     }
 
+    public function equals(Id $id): bool
+    {
+        return $this->id === (string)$id;
+    }
+
     public static function generateRandom(): self
     {
         return new self(str_random(self::LENGTH));

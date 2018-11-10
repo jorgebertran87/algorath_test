@@ -41,7 +41,7 @@ final class UserRepositoryStub implements UserRepository
     {
         /** @var User $user */
         foreach($this->users as $user) {
-            if ($user->id() === $id) {
+            if ($user->id()->equals($id)) {
                 return $user->connections();
             }
         }
@@ -52,5 +52,27 @@ final class UserRepositoryStub implements UserRepository
     public function all(): Users
     {
         return $this->users;
+    }
+
+    public function update(User $user): void
+    {
+        // TODO: Implement update() method.
+    }
+
+    public function removeConnections(User $user): void
+    {
+        $user->addConnections(Connections::create([]));
+    }
+
+    public function findById(Id $id): ?User
+    {
+        /** @var User $user */
+        foreach($this->users as $user) {
+            if ($user->id()->equals($id) ) {
+                return $user;
+            }
+        }
+
+        return null;
     }
 }

@@ -51,4 +51,25 @@ class UserRepositoryTest extends TestCase
         Assert::assertInstanceOf(Connections::class, $connections);
         Assert::assertCount(1, $connections);
     }
+
+    public function testItRemovesConnectionsFromUser(): void
+    {
+        $this->userRepository->removeConnections($this->user);
+
+        $connections = $this->userRepository->getConnectionsFromId($this->user->id());
+
+        Assert::assertInstanceOf(Connections::class, $connections);
+        Assert::assertCount(0, $connections);
+    }
+
+    public function testItFindsUserFromId(): void
+    {
+        $user2 = new User(new Id(self::ID2), new Name(self::NAME2));
+        $this->userRepository->add($user2);
+
+        $user = $this->userRepository->findById($user2->id());
+
+        Assert::assertInstanceOf(User::class, $user);
+        Assert::assertTrue($user2->id()->equals($user->id()));
+    }
 }
