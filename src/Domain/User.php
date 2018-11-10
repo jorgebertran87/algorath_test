@@ -37,6 +37,6 @@ final class User
 
     public function equals(User $user): bool
     {
-        return (string)$this->id() === (string)$user->id();
+        return $this->id()->equals($user->id());
     }
 }
