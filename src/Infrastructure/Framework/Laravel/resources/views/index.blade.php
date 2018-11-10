@@ -80,7 +80,7 @@
     <body>
         <div class="top-left links">
             <a href="{{ url('/') }}">Users</a>
-            <a href="{{ url('/report') }}">Report</a>
+            <a href="{{ url('/stats') }}">Stats</a>
         </div>
         <div class="top-right links">
             <a href="{{ url('/users/new') }}">New User</a>
