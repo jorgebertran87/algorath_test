@@ -9,18 +9,17 @@ use AlgorathTest\Domain\Id;
 
 class RetrieveConnectionsFromUserQueryHandler
 {
-    private $retrieveConnectionsFromUserQuery;
+    private $userRepository;
 
-    public function __construct(RetrieveConnectionsFromUserQuery $retrieveConnectionsFromUserQuery)
+    public function __construct(UserRepository $userRepository)
     {
-        $this->retrieveConnectionsFromUserQuery = $retrieveConnectionsFromUserQuery;
+        $this->userRepository = $userRepository;
     }
 
-    public function handle(): Connections
+    public function handle(RetrieveConnectionsFromUserQuery $retrieveConnectionsFromUserQuery): Connections
     {
-        $userId         = $this->retrieveConnectionsFromUserQuery->userId();
-        $userRepository = $this->retrieveConnectionsFromUserQuery->userRepository();
+        $id = $retrieveConnectionsFromUserQuery->id();
 
-        return $userRepository->getConnectionsFromId($userId);
+        return $this->userRepository->getConnectionsFromId(new Id($id));
     }
 }

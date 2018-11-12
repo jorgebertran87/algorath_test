@@ -3,28 +3,37 @@ declare(strict_types=1);
 
 namespace AlgorathTest\Application\Command;
 
+use AlgorathTest\Application\Repository\UserRepository;
+use AlgorathTest\Application\Service\ConnectionsParser;
+use AlgorathTest\Domain\Id;
+use AlgorathTest\Domain\Name;
+use AlgorathTest\Domain\User;
+
 class UpdateUserCommandHandler
 {
-    private $updateUserCommand;
+    private $userRepository;
+    private $connectionsParser;
 
-    public function __construct(UpdateUserCommand $updateUserCommand)
+    public function __construct(UserRepository $userRepository, ConnectionsParser $connectionsParser)
     {
-        $this->updateUserCommand = $updateUserCommand;
+        $this->userRepository    = $userRepository;
+        $this->connectionsParser = $connectionsParser;
     }
 
-    public function handle(): void
+    public function handle(UpdateUserCommand $updateUserCommand): void
     {
-        $userRepository = $this->updateUserCommand->userRepository();
-        $user           = $this->updateUserCommand->user();
+        $id               = $updateUserCommand->id();
+        $name             = $updateUserCommand->name();
+        $connectedUserIds = $updateUserCommand->connectedUserIds();
 
-        $userRepository->update($user);
-        $userRepository->removeConnections($user);
+        $user = new User(new Id($id), new Name($name));
 
+        $this->userRepository->update($user);
+        $this->userRepository->removeConnections($user);
 
-        $connections = $user->connections();
-
+        $connections = $this->connectionsParser->parse($connectedUserIds);
         foreach($connections as $connection) {
-            $userRepository->addConnection($user, $connection);
+            $this->userRepository->addConnection($user, $connection);
         }
     }
 }

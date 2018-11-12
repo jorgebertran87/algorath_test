@@ -21,7 +21,7 @@ final class Id
 
     public static function generateRandom(): self
     {
-        return new self(str_random(self::LENGTH));
+        return new self(uniqid(""));
     }
 
     public function __toString(): string
