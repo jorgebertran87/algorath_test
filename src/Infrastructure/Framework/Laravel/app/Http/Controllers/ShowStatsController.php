@@ -5,26 +5,19 @@ namespace App\Http\Controllers;
 
 use AlgorathTest\Application\Query\QueryBus;
 use AlgorathTest\Application\Query\RetrieveUsersWithConnectionsQuery;
-use AlgorathTest\Application\Query\RetrieveUsersWithConnectionsQueryHandler;
-use AlgorathTest\Application\Repository\UserRepository;
+use Illuminate\Routing\Controller;
 use Illuminate\View\View;
 
 
 final class ShowStatsController extends Controller
 {
     public function handle(
-        QueryBus $queryBus,
-        UserRepository $userRepository
+        QueryBus $queryBus
     ): View
     {
-        $query = new RetrieveUsersWithConnectionsQuery($userRepository);
+        $query = new RetrieveUsersWithConnectionsQuery();
         $users = $queryBus->handle($query);
 
         return view('stats', compact('users'));
-    }
-
-    protected function injectCommandQueryDependencies(): void
-    {
-        QueryBus::use([RetrieveUsersWithConnectionsQuery::class => RetrieveUsersWithConnectionsQueryHandler::class]);
     }
 }

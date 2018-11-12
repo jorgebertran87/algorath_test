@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Tests\Application\Query;
 
 use AlgorathTest\Application\Query\RetrieveUsersQuery;
-use AlgorathTest\Application\Query\RetrieveUsersQueryHandler;
 use AlgorathTest\Application\Repository\UserRepository;
 use AlgorathTest\Domain\Id;
 use AlgorathTest\Domain\Name;
@@ -12,7 +11,6 @@ use AlgorathTest\Domain\User;
 use AlgorathTest\Domain\Users;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
-use Tests\Application\Repository\UserRepositoryStub;
 
 class RetrieveUsersQueryTest extends TestCase
 {
@@ -22,6 +20,7 @@ class RetrieveUsersQueryTest extends TestCase
     private $user2;
     /** @var  UserRepository $userRepository */
     private $userRepository;
+    private $queryBus;
 
     private const ID1   = '1';
     private const NAME1 = 'Name 1';
@@ -32,9 +31,10 @@ class RetrieveUsersQueryTest extends TestCase
     {
         parent::setUp();
 
+        $this->queryBus       = new QueryBusStub();
         $this->user1          = new User(new Id(self::ID1), new Name(self::NAME1));
         $this->user2          = new User(new Id(self::ID2), new Name(self::NAME2));
-        $this->userRepository = new UserRepositoryStub();
+        $this->userRepository = $this->queryBus->userRepository();
     }
 
     public function testItRetrievesUsers(): void
@@ -42,10 +42,9 @@ class RetrieveUsersQueryTest extends TestCase
         $this->userRepository->add($this->user1);
         $this->userRepository->add($this->user2);
 
-        $command = new RetrieveUsersQuery($this->userRepository);
-        $handler = new RetrieveUsersQueryHandler($command);
+        $query = new RetrieveUsersQuery();
 
-        $users = $handler->handle();
+        $users = $this->queryBus->handle($query);
 
         Assert::assertInstanceOf(Users::class, $users);
         Assert::assertCount(2, $users);

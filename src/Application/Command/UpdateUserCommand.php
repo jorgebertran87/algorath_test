@@ -3,27 +3,31 @@ declare(strict_types=1);
 
 namespace AlgorathTest\Application\Command;
 
-use AlgorathTest\Application\Repository\UserRepository;
-use AlgorathTest\Domain\User;
-
 class UpdateUserCommand
 {
-    private $user;
-    private $userRepository;
+    private $id;
+    private $name;
+    private $connectedUserIds;
 
-    public function __construct(User $user, UserRepository $userRepository)
+    public function __construct(string $id, string $name, ?array $connectedUserIds)
     {
-        $this->user           = $user;
-        $this->userRepository = $userRepository;
+        $this->id               = $id;
+        $this->name             = $name;
+        $this->connectedUserIds = $connectedUserIds;
     }
 
-    public function user(): User
+    public function id(): string
     {
-        return $this->user;
+        return $this->id;
     }
 
-    public function userRepository(): UserRepository
+    public function name(): string
     {
-        return $this->userRepository;
+        return $this->name;
+    }
+
+    public function connectedUserIds(): ?array
+    {
+        return $this->connectedUserIds;
     }
 }

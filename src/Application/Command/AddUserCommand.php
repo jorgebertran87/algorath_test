@@ -3,27 +3,17 @@ declare(strict_types=1);
 
 namespace AlgorathTest\Application\Command;
 
-use AlgorathTest\Application\Repository\UserRepository;
-use AlgorathTest\Domain\User;
-
 class AddUserCommand
 {
-    private $user;
-    private $userRepository;
+    private $name;
 
-    public function __construct(User $user, UserRepository $userRepository)
+    public function __construct(string $name)
     {
-        $this->user           = $user;
-        $this->userRepository = $userRepository;
+        $this->name = $name;
     }
 
-    public function user(): User
+    public function name(): string
     {
-        return $this->user;
-    }
-
-    public function userRepository(): UserRepository
-    {
-        return $this->userRepository;
+        return $this->name;
     }
 }

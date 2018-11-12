@@ -1,6 +1,7 @@
 <?php
+declare(strict_types=1);
 
-namespace AlgorathTest\Infrastructure\Framework\Laravel\app\Services;
+namespace AlgorathTest\Application\Service;
 
 use AlgorathTest\Domain\Connections;
 use AlgorathTest\Domain\Id;

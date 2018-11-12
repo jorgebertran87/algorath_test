@@ -3,20 +3,25 @@ declare(strict_types=1);
 
 namespace AlgorathTest\Application\Command;
 
+use AlgorathTest\Application\Repository\UserRepository;
+use AlgorathTest\Domain\Id;
+use AlgorathTest\Domain\Name;
+use AlgorathTest\Domain\User;
+
 class AddUserCommandHandler
 {
-    private $addUserCommand;
+    private $userRepository;
 
-    public function __construct(AddUserCommand $addUserCommand)
+    public function __construct(UserRepository $userRepository)
     {
-        $this->addUserCommand = $addUserCommand;
+        $this->userRepository = $userRepository;
     }
 
-    public function handle(): void
+    public function handle(AddUserCommand $addUserCommand): void
     {
-        $userRepository = $this->addUserCommand->userRepository();
-        $user           = $this->addUserCommand->user();
+        $name           = $addUserCommand->name();
+        $user           = new User(Id::generateRandom(), new Name($name));
 
-        $userRepository->add($user);
+        $this->userRepository->add($user);
     }
 }

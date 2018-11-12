@@ -3,27 +3,26 @@ declare(strict_types=1);
 
 namespace AlgorathTest\Application\Query;
 
+use AlgorathTest\Application\Repository\UserRepository;
 use AlgorathTest\Domain\User;
 use AlgorathTest\Domain\Users;
 
 class RetrieveUsersWithConnectionsQueryHandler
 {
-    private $retrieveUsersWithConnectionsQuery;
+    private $userRepository;
 
-    public function __construct(RetrieveUsersWithConnectionsQuery $retrieveUsersWithConnectionsQuery)
+    public function __construct(UserRepository $userRepository)
     {
-        $this->retrieveUsersWithConnectionsQuery = $retrieveUsersWithConnectionsQuery;
+        $this->userRepository = $userRepository;
     }
 
     public function handle(): Users
     {
-        $userRepository = $this->retrieveUsersWithConnectionsQuery->userRepository();
-
-        $users = $userRepository->all();
+        $users = $this->userRepository->all();
 
         /** @var User $user */
         foreach($users as $user) {
-            $connections = $userRepository->getConnectionsFromId($user->id());
+            $connections = $this->userRepository->getConnectionsFromId($user->id());
             $user->addConnections($connections);
         }
 
