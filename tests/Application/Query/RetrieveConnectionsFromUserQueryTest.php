@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Tests\Application\Query;
 
 use AlgorathTest\Application\Query\RetrieveConnectionsFromUserQuery;
-use AlgorathTest\Application\Query\RetrieveConnectionsFromUserQueryHandler;
 use AlgorathTest\Application\Repository\UserRepository;
 use AlgorathTest\Domain\Connections;
 use AlgorathTest\Domain\Id;
@@ -12,7 +11,6 @@ use AlgorathTest\Domain\Name;
 use AlgorathTest\Domain\User;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
-use Tests\Application\Repository\UserRepositoryStub;
 
 class RetrieveConnectionsFromUserQueryTest extends TestCase
 {
@@ -22,6 +20,7 @@ class RetrieveConnectionsFromUserQueryTest extends TestCase
     private $user2;
     /** @var  UserRepository $userRepository */
     private $userRepository;
+    private $queryBus;
 
     private const ID1   = '1';
     private const NAME1 = 'Name 1';
@@ -33,9 +32,10 @@ class RetrieveConnectionsFromUserQueryTest extends TestCase
     {
         parent::setUp();
 
+        $this->queryBus       = new QueryBusStub();
         $this->user1          = new User(new Id(self::ID1), new Name(self::NAME1));
         $this->user2          = new User(new Id(self::ID2), new Name(self::NAME2));
-        $this->userRepository = new UserRepositoryStub();
+        $this->userRepository = $this->queryBus->userRepository();
     }
 
     public function testItRetrievesConnectionsFromUser(): void
@@ -44,10 +44,8 @@ class RetrieveConnectionsFromUserQueryTest extends TestCase
         $this->userRepository->add($this->user2);
         $this->userRepository->addConnection($this->user1, $this->user2);
 
-        $command = new RetrieveConnectionsFromUserQuery($this->user2->id(), $this->userRepository);
-        $handler = new RetrieveConnectionsFromUserQueryHandler($command);
-
-        $connections = $handler->handle();
+        $command = new RetrieveConnectionsFromUserQuery(self::ID2);
+        $connections = $this->queryBus->handle($command);
 
         Assert::assertInstanceOf(Connections::class, $connections);
         Assert::assertCount(1, $connections);
