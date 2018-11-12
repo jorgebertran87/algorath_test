@@ -79,11 +79,11 @@
     </head>
     <body>
         <div class="top-left links">
-            <a href="{{ url('/') }}">Users</a>
-            <a href="{{ url('/stats') }}">Stats</a>
+            <a id="link_to_users" href="{{ url('/') }}">Users</a>
+            <a id="link_to_stats" href="{{ url('/stats') }}">Stats</a>
         </div>
         <div class="top-right links">
-            <a href="{{ url('/users/new') }}">New User</a>
+            <a id="link_to_new_user" href="{{ url('/users/new') }}">New User</a>
         </div>
         <div class="position-ref full-height">
             <div class="content">

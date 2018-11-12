@@ -9,7 +9,7 @@
             <tr>
                 <td>{{ $user->id() }}</td>
                 <td>{{ $user->name() }}</td>
-                <td><a href="{{ url('users/'.$user->id()) }}">edit</a></td>
+                <td><a id="link_to_edit_user_{{$user->id()}}" href="{{ url('users/'.$user->id()) }}">edit</a></td>
             </tr>
         @endforeach
     </table>

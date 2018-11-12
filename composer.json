@@ -12,7 +12,9 @@
         }
     },
     "require-dev": {
-        "phpunit/phpunit": "*"
+        "phpunit/phpunit": "6.5.*",
+        "behat/mink": "^1.7",
+        "behat/mink-goutte-driver": "^1.2"
     },
     "scripts" : {
         "syntax-check": [
