@@ -17,6 +17,16 @@ class AppServiceProvider extends ServiceProvider
             \AlgorathTest\Application\Repository\UserRepository::class,
             \AlgorathTest\Infrastructure\Repository\Eloquent\UserRepository::class
         );
+
+        $this->app->bind(
+            \AlgorathTest\Application\Command\CommandBus::class,
+            \AlgorathTest\Infrastructure\CQRS\CommandBus::class
+        );
+
+        $this->app->bind(
+            \AlgorathTest\Application\Query\QueryBus::class,
+            \AlgorathTest\Infrastructure\CQRS\QueryBus::class
+        );
     }
 
     /**
